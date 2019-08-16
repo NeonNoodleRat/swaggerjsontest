@@ -6,6 +6,7 @@
     "contact" : {
       "email" : "you@your-company.com"
     },
+    "host": "api.openweathermap.org",
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
