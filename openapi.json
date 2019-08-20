@@ -1,83 +1,59 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "title" : "Simple Inventory API",
-    "description" : "This is a simple API",
+    "description" : "This is an API for K2",
+    "version" : "1.0.0",
+    "title" : "MediMobile Resources API",
     "contact" : {
-      "email" : "you@your-company.com"
+      "email" : "support@medimobile.com"
     },
-    "host": "api.openweathermap.org",
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version" : "1.0.0"
+    }
   },
-  "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/MediMobile/test/1.0.0",
-    "description" : "SwaggerHub API Auto Mocking"
-  } ],
-  "tags" : [ {
-    "name" : "admins",
-    "description" : "Secured Admin-only calls"
-  }, {
-    "name" : "developers",
-    "description" : "Operations available to regular developers"
-  } ],
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/MediMobile/KS-API-3/1.0.0",
+  "schemes" : [ "https" ],
   "paths" : {
-    "/inventory" : {
+    "/organization" : {
       "get" : {
-        "tags" : [ "developers" ],
-        "summary" : "searches inventory",
-        "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
-        "operationId" : "searchInventory",
+        "summary" : "get a list of portal organizations",
+        "description" : "Search for available organizations in the portal\n",
+        "operationId" : "searchOrganization",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "searchString",
+          "name" : "name",
           "in" : "query",
-          "description" : "pass an optional search string for looking up inventory",
+          "description" : "pass an optional search string for looking up organization by name",
           "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
-          }
+          "type" : "string"
         }, {
-          "name" : "skip",
+          "name" : "city",
           "in" : "query",
-          "description" : "number of records to skip for pagination",
+          "description" : "city optional parameter",
           "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "minimum" : 0,
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "type" : "string"
         }, {
-          "name" : "limit",
+          "name" : "state",
           "in" : "query",
-          "description" : "maximum number of records to return",
+          "description" : "state optional parameter",
           "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "maximum" : 50,
-            "minimum" : 0,
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "type" : "string"
+        }, {
+          "name" : "zip",
+          "in" : "query",
+          "description" : "zip optional parameter",
+          "required" : false,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
             "description" : "search results matching criteria",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/InventoryItem"
-                  }
-                }
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Organization"
               }
             }
           },
@@ -85,77 +61,67 @@
             "description" : "bad input parameter"
           }
         }
-      },
-      "post" : {
-        "tags" : [ "admins" ],
-        "summary" : "adds an inventory item",
-        "description" : "Adds an item to the system",
-        "operationId" : "addInventory",
-        "requestBody" : {
-          "description" : "Inventory item to add",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/InventoryItem"
+      }
+    },
+    "/profiles" : {
+      "get" : {
+        "summary" : "get a list of profiles",
+        "description" : "Search for available profiles\n",
+        "operationId" : "searchProfiles",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "guidId",
+          "in" : "path",
+          "description" : "uuid of profile",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Profile"
               }
             }
-          }
-        },
-        "responses" : {
-          "201" : {
-            "description" : "item created"
           },
           "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "409" : {
-            "description" : "an existing item already exists"
+            "description" : "bad input parameter"
           }
         }
       }
     }
   },
-  "components" : {
-    "schemas" : {
-      "InventoryItem" : {
-        "required" : [ "id", "manufacturer", "name", "releaseDate" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
-          },
-          "name" : {
-            "type" : "string",
-            "example" : "Widget Adapter"
-          },
-          "releaseDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "manufacturer" : {
-            "$ref" : "#/components/schemas/Manufacturer"
-          }
+  "definitions" : {
+    "Organization" : {
+      "type" : "object",
+      "required" : [ "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Healthcare Intelligence"
         }
-      },
-      "Manufacturer" : {
-        "required" : [ "name" ],
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "example" : "ACME Corporation"
-          },
-          "homePage" : {
-            "type" : "string",
-            "format" : "url",
-            "example" : "https://www.acme-corp.com"
-          },
-          "phone" : {
-            "type" : "string",
-            "example" : "408-867-5309"
-          }
+      }
+    },
+    "Profile" : {
+      "type" : "object",
+      "required" : [ "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Profile Name"
         }
       }
     }
