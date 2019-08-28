@@ -1,129 +1,107 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "v1",
-        "title": "K2 API"
-    },
-    "host": "localhost",
-    "basePath": "/MediMobile.CustomerManagement.Mvc",
-    "schemes": [
-        "https"
-    ],
-    "paths": {
-        "/api/Swagger/Organizations": {
-            "get": {
-                "tags": [
-                    "Swagger"
-                ],
-                "summary": "this is a summary",
-                "description": "this is a remark",
-                "operationId": "FindOrganizations",
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json",
-                    "application/xml",
-                    "text/xml"
-                ],
-                "parameters": [
-                    {
-                        "name": "orgName",
-                        "in": "query",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "city",
-                        "in": "query",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "state",
-                        "in": "query",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "zip",
-                        "in": "query",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Portal organizations",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Organization"
-                            }
-                        }
-                    }
-                }
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "yo",
+    "version" : "1.0.0",
+    "title" : "swagger medimobile",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "apiteam@swagger.io"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/YYYYEEEEEEAAAAA/neat/1.0.0",
+  "schemes" : [ "https", "http" ],
+  "security" : [ {
+    "BasicAuth" : [ ]
+  } ],
+  "paths" : {
+    "/api/Swagger/Organizations" : {
+      "get" : {
+        "tags" : [ "swagger", "organization" ],
+        "summary" : "find organizations from portal",
+        "description" : "find organizations from portal",
+        "operationId" : "GETSOMEORGS",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "orgName",
+          "in" : "query",
+          "description" : "name of an organizations",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "city",
+          "in" : "query",
+          "description" : "city of an org",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "state",
+          "in" : "query",
+          "description" : "state of an org",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "zip",
+          "in" : "query",
+          "description" : "zip of an org",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Organization"
+              }
             }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "BasicAuth" : {
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "Organization" : {
+      "type" : "object",
+      "required" : [ "name", "photoUrls" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
         },
-        "/api/Swagger/Profiles": {
-            "get": {
-                "tags": [
-                    "Swagger"
-                ],
-                "operationId": "Swagger_Profiles",
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json",
-                    "application/xml",
-                    "text/xml"
-                ],
-                "parameters": [
-                    {
-                        "name": "organizationId",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "format": "uuid"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                }
-            }
+        "name" : {
+          "type" : "string",
+          "example" : "doggie"
+        },
+        "photoUrls" : {
+          "type" : "array",
+          "xml" : {
+            "name" : "photoUrl",
+            "wrapped" : true
+          },
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "pet status in the store",
+          "enum" : [ "available", "pending", "sold" ]
         }
-    },
-    "definitions": {
-        "Organization": {
-            "type": "object",
-            "properties": {
-                "Id": {
-                    "format": "uuid",
-                    "type": "string",
-                    "example": "00000000-0000-0000-0000-000000000000"
-                },
-                "Name": {
-                    "type": "string"
-                },
-                "xml" : {
-                  "name" : "THISISANORGANIZATION"
-                }
-            }
-        }
-    },
-    "securityDefinitions": {
-        "basic": {
-            "type": "basic",
-            "description": "Basic HTTP Authentication"
-        }
-    },
-    "security": [
-        {
-            "basicAuth": []
-        }
-    ]
+      },
+      "xml" : {
+        "name" : "PortalOrg"
+      }
+    }
+  }
 }
