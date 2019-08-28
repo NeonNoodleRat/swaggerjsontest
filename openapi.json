@@ -9,12 +9,6 @@
       "email" : "apiteam@swagger.io"
     }
   },
-  "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/YYYYEEEEEEAAAAA/neat/1.0.0",
-  "schemes" : [ "https", "http" ],
-  "security" : [ {
-    "BasicAuth" : [ ]
-  } ],
   "paths" : {
     "/api/Swagger/Organizations" : {
       "get" : {
@@ -70,38 +64,25 @@
       "type" : "basic"
     }
   },
+  "security" : [ {
+    "BasicAuth" : [ ]
+  } ],
   "definitions" : {
     "Organization" : {
       "type" : "object",
-      "required" : [ "name", "photoUrls" ],
       "properties" : {
         "id" : {
-          "type" : "integer",
-          "format" : "int64"
+          "type" : "string",
+          "format" : "uuid"
         },
         "name" : {
           "type" : "string",
-          "example" : "doggie"
-        },
-        "photoUrls" : {
-          "type" : "array",
-          "xml" : {
-            "name" : "photoUrl",
-            "wrapped" : true
-          },
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "status" : {
-          "type" : "string",
-          "description" : "pet status in the store",
-          "enum" : [ "available", "pending", "sold" ]
+          "example" : "Healthcare Intelligence Inc."
         }
-      },
-      "xml" : {
-        "name" : "PortalOrg"
       }
     }
-  }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/YYYYEEEEEEAAAAA/neat/1.0.0",
+  "schemes" : [ "https", "http" ]
 }
