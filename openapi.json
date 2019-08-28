@@ -27,7 +27,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "orgName",
                         "in": "query",
                         "required": false,
                         "type": "string"
